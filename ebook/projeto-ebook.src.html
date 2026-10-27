@@ -1,0 +1,405 @@
+<title>Tidioli Studio E-book</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=Source+Sans+3:wght@400;500;600&display=swap">
+<style>
+/* Layout: faixa preta com a logo no topo; abas fixas; cada aba é uma lista de blocos em coluna única, com mapas em tabela e wireframe. */
+:root{
+  --bg:#f1f4f6; --surface:#ffffff; --ink:#10181e; --muted:#51606b; --line:#d5dde2;
+  --accent:#00739a; --accent-ink:#ffffff; --accent-soft:#dcedf4; --steel:#c8caca; --band:#000000;
+  --warn:#a84f08; --warn-soft:#fbeadb;
+  --display:"Saira Condensed","Arial Narrow",Arial,sans-serif; --body:"Source Sans 3",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a0f13; --surface:#121a20; --ink:#e6edf1; --muted:#98aab6; --line:#25333d;
+  --accent:#2fb4de; --accent-ink:#031a22; --accent-soft:#0f2e3a; --warn:#f0a35e; --warn-soft:#3a2a1a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0a0f13; --surface:#121a20; --ink:#e6edf1; --muted:#98aab6; --line:#25333d;
+  --accent:#2fb4de; --accent-ink:#031a22; --accent-soft:#0f2e3a; --warn:#f0a35e; --warn-soft:#3a2a1a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--body);padding-block:0 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:900px;margin:0 auto}
+.brand{background:var(--band);border-radius:0 0 8px 8px;padding:18px 20px;margin-top:0;display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between}
+.brand img{height:78px;width:auto;max-width:100%;display:block}
+.brand .proj{color:var(--steel);font:600 15px var(--display);letter-spacing:.16em;text-transform:uppercase}
+.kicker{font:600 14px var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+h1{font:800 clamp(34px,6vw,54px)/1 var(--display);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
+h2{font:800 clamp(26px,4vw,34px)/1.1 var(--display);margin:0 0 10px;text-transform:uppercase;text-wrap:balance}
+h3{font:600 22px/1.2 var(--display);margin:0 0 6px;letter-spacing:.02em}
+p{margin:0 0 12px}
+.lede{color:var(--muted);max-width:62ch}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:1px solid var(--line);margin:16px 0 26px;display:flex;gap:2px;overflow-x:auto}
+nav a{padding:12px 14px;color:var(--muted);text-decoration:none;font:600 16px var(--display);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;border-bottom:3px solid transparent}
+nav a[aria-current="true"]{color:var(--ink);border-color:var(--accent)}
+nav a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section.tab{display:none}
+section.tab.on{display:block}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;min-width:0}
+.tag{display:inline-block;font:600 13px var(--display);letter-spacing:.1em;text-transform:uppercase;padding:1px 8px;border-radius:3px;background:var(--accent-soft);color:var(--accent)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+ul{margin:0 0 12px;padding-left:20px} li{margin-bottom:4px}
+.tip{background:var(--accent-soft);border-left:4px solid var(--accent);padding:12px 14px;border-radius:0 6px 6px 0;margin:14px 0}
+.alert{background:var(--warn-soft);border-left:4px solid var(--warn);padding:12px 14px;border-radius:0 6px 6px 0;margin:14px 0}
+.scroll{overflow-x:auto;margin-bottom:14px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 13px var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+td.pg{white-space:nowrap;font-weight:600;color:var(--accent)}
+.spec{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:14px 0}
+.spec div{border-top:3px solid var(--accent);padding-top:6px}
+.spec b{display:block;font:800 22px var(--display)}
+.spec span{font-size:14px;color:var(--muted)}
+.sw{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.sw i{display:block;width:88px;height:48px;border-radius:4px;border:1px solid var(--line);font:600 12px/48px var(--display);text-align:center;font-style:normal;letter-spacing:.06em}
+/* wireframe do site */
+.site{display:grid;gap:18px;grid-template-columns:minmax(0,1fr) minmax(0,260px);align-items:start}
+@media(max-width:700px){.site{grid-template-columns:minmax(0,1fr)}}
+.sec{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:16px 0;border-top:1px solid var(--line)}
+.sec .n{font:800 26px var(--display);color:var(--accent);line-height:1}
+.sec h3{margin-bottom:4px}
+.wf{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px;display:flex;flex-direction:column;gap:6px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 56px)}
+.wf div{background:var(--accent-soft);border-radius:3px;padding:6px 8px;font:600 13px var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.wf div.k{background:var(--band);color:var(--steel)}
+.wf div.c{background:var(--accent);color:var(--accent-ink)}
+.chap{border-top:1px solid var(--line);padding:20px 0}
+.chap .meta{display:flex;gap:10px;align-items:center;margin-bottom:6px;color:var(--muted);font-size:14px}
+.flow{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 20px}
+.flow .step{flex:1 1 140px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px;min-width:0}
+.flow .step b{display:block;font:600 18px var(--display)}
+.flow .step span{font-size:14px;color:var(--muted)}
+.script{white-space:pre-wrap;font-size:16px;margin:0 0 10px}
+button{font:600 15px var(--body);background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:7px 14px;cursor:pointer}
+.calc{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+label{display:block;font-size:14px;color:var(--muted);font-weight:600}
+input[type=number]{width:100%;font:500 17px var(--body);padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);margin-top:4px}
+.out{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-top:16px}
+.out div{border-top:3px solid var(--accent);padding-top:6px}
+.out strong{display:block;font:800 30px var(--display);font-variant-numeric:tabular-nums}
+.out span{font-size:14px;color:var(--muted)}
+.check{padding-left:0}.check li{list-style:none}.check input{margin-right:8px}
+.note{font-size:14px;color:var(--muted)}
+.cta{display:inline-block;background:var(--accent);color:var(--accent-ink);padding:10px 18px;border-radius:4px;font:600 17px var(--display);letter-spacing:.06em;text-transform:uppercase}
+@media (prefers-reduced-motion:no-preference){section.tab.on{animation:in .25s ease}}
+@keyframes in{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+
+<div class="wrap">
+<div class="brand">
+  <img src="data:image/png;base64,__LOGO__" alt="Tidioli Studio, estética automotiva">
+  <span class="proj">Projeto e-book · Lavagem Sem Risco</span>
+</div>
+<h1>E-book e site de vendas</h1>
+<p class="lede">Estrutura página a página do e-book e seção a seção do site, já com a identidade do Tidioli Studio. O nome "Lavagem Sem Risco" é de trabalho.</p>
+
+<nav aria-label="Seções">
+  <a href="#ebook">Estrutura do e-book</a>
+  <a href="#site">Estrutura do site</a>
+  <a href="#conteudo">Conteúdo</a>
+  <a href="#oferta">Oferta</a>
+  <a href="#anuncios">Anúncios</a>
+  <a href="#numeros">Números</a>
+</nav>
+
+<!-- ESTRUTURA DO E-BOOK -->
+<section class="tab" id="ebook">
+  <h2>Estrutura do e-book</h2>
+  <p>27 páginas em A4 vertical, na ordem em que o cliente lê. O vídeo e a lista básica de compras fazem parte do e-book.</p>
+  <div class="scroll"><table>
+    <tr><th>Páginas</th><th>Parte</th><th>O que entra</th></tr>
+    <tr><td class="pg">1</td><td><b>Capa</b></td><td>Logo, título, subtítulo "Lave em casa com método de profissional" e uma foto sua com carro limpo e reflexo bonito.</td></tr>
+    <tr><td class="pg">2</td><td><b>Folha de rosto</b></td><td>Tidioli Studio, ano, direitos reservados e um aviso curto: siga sempre as orientações de cada produto.</td></tr>
+    <tr><td class="pg">3</td><td><b>Sumário e como usar</b></td><td>Lista dos capítulos e um quadro "Assista ao vídeo" com o link e o código QR.</td></tr>
+    <tr><td class="pg">4</td><td><b>Boas-vindas</b></td><td>Foto sua, 6 anos de estética automotiva, e o que o cliente vai conseguir fazer no fim.</td></tr>
+    <tr><td class="pg">5 a 6</td><td><b>Cap. 1 · Por que o carro risca</b></td><td>Os 4 erros e uma foto de micro-riscos sob lanterna.</td></tr>
+    <tr><td class="pg">7 a 9</td><td><b>Cap. 2 · Kit por orçamento</b></td><td>Tabela básico, intermediário e avançado, a lista de compras e a regra da microfibra.</td></tr>
+    <tr><td class="pg">10 a 11</td><td><b>Cap. 3 · Antes de molhar</b></td><td>Local, temperatura, preparação dos dois baldes.</td></tr>
+    <tr><td class="pg">12 a 17</td><td><b>Cap. 4 · O passo a passo</b></td><td>Uma etapa por página, cada uma com foto: rodas, enxágue, espuma, dois baldes, ordem da lavagem, secagem.</td></tr>
+    <tr><td class="pg">18</td><td><b>Página do vídeo</b></td><td>Link e código QR da lavagem completa, com a lista de capítulos do vídeo e o tempo de cada um.</td></tr>
+    <tr><td class="pg">19 a 20</td><td><b>Cap. 5 · Proteção rápida</b></td><td>Selante ou cera em 10 minutos, pneus e vidros.</td></tr>
+    <tr><td class="pg">21 a 22</td><td><b>Cap. 6 · Erros e mitos</b></td><td>Quatro ou cinco mitos em formato "mito e verdade".</td></tr>
+    <tr><td class="pg">23 a 24</td><td><b>Cap. 7 · Rotina</b></td><td>Quinzenal, mensal e trimestral em um quadro simples.</td></tr>
+    <tr><td class="pg">25</td><td><b>Checklist da lavagem</b></td><td>Uma página para imprimir, com caixas para marcar.</td></tr>
+    <tr><td class="pg">26</td><td><b>Próximo passo</b></td><td>Agradecimento, seu Instagram, WhatsApp do estúdio e convite pra compartilhar o resultado.</td></tr>
+    <tr><td class="pg">27</td><td><b>Contracapa</b></td><td>Logo do Tidioli Studio sobre fundo preto.</td></tr>
+  </table></div>
+
+  <h3>Visual do PDF</h3>
+  <p>O fundo preto da logo vira a base da capa e da contracapa. O miolo fica branco para ler bem e para imprimir sem gastar tinta.</p>
+  <div class="sw">
+    <i style="background:#000;color:#c8caca">PRETO</i>
+    <i style="background:#007399;color:#fff;border-color:#007399">AZUL</i>
+    <i style="background:#c8caca;color:#000;border-color:#c8caca">CINZA</i>
+    <i style="background:#fff;color:#000">BRANCO</i>
+  </div>
+  <div class="spec">
+    <div><b>A4 vertical</b><span>Também lê bem no celular</span></div>
+    <div><b>1 tema por página</b><span>Foto grande e pouco texto</span></div>
+    <div><b>Azul da logo</b><span>Só em títulos, linhas e destaques</span></div>
+    <div><b>Rodapé fixo</b><span>Logo pequena e número da página</span></div>
+  </div>
+
+  <h3 style="margin-top:22px">Fotos que você precisa tirar</h3>
+  <p>Foto no celular na horizontal serve. Com luz do dia, sem sol direto. Faça cada uma antes de começar a lavagem e durante.</p>
+  <div class="scroll"><table>
+    <tr><th>#</th><th>Foto</th><th>Vai para</th></tr>
+    <tr><td>1</td><td>Você com o carro limpo, reflexo na pintura</td><td>Capa e boas-vindas</td></tr>
+    <tr><td>2</td><td>Close de micro-riscos sob lanterna</td><td>Capítulo 1</td></tr>
+    <tr><td>3</td><td>Esponja errada versus luva de microfibra</td><td>Capítulo 1</td></tr>
+    <tr><td>4</td><td>Seu kit montado, com todos os itens</td><td>Capítulo 2</td></tr>
+    <tr><td>5</td><td>Dois baldes montados</td><td>Capítulos 3 e 4</td></tr>
+    <tr><td>6</td><td>Lavando rodas e pneus</td><td>Capítulo 4</td></tr>
+    <tr><td>7</td><td>Enxágue de cima para baixo</td><td>Capítulo 4</td></tr>
+    <tr><td>8</td><td>Espuma cobrindo o carro</td><td>Capítulo 4</td></tr>
+    <tr><td>9</td><td>Lavagem em linhas retas</td><td>Capítulo 4</td></tr>
+    <tr><td>10</td><td>Secagem com toalha de microfibra</td><td>Capítulo 4</td></tr>
+    <tr><td>11</td><td>Aplicando selante e retirando o excesso</td><td>Capítulo 5</td></tr>
+    <tr><td>12</td><td>Antes e depois do mesmo carro, na mesma luz</td><td>Capa do site e anúncios</td></tr>
+  </table></div>
+  <div class="tip"><b>Dica:</b> grave o vídeo da lavagem e tire as fotos 6 a 11 como capturas do próprio vídeo. Uma lavagem só rende e-book, vídeo e anúncio.</div>
+</section>
+
+<!-- ESTRUTURA DO SITE -->
+<section class="tab" id="site">
+  <h2>Estrutura do site</h2>
+  <p>Uma página só, de rolagem, pensada para quem vem do celular pelo anúncio. Cada seção tem uma função, e o botão de compra aparece várias vezes.</p>
+  <div class="site">
+    <div>
+      <div class="sec"><span class="n">1</span><div><h3>Topo</h3><p>Barra preta com a logo à esquerda e um botão "Quero o e-book" à direita. Sem menu com vários links, pra não distrair.</p></div></div>
+      <div class="sec"><span class="n">2</span><div><h3>Abertura</h3><p><b>Título:</b> "Pare de riscar o seu carro quando lava". <b>Subtítulo:</b> método de quem trabalha com estética automotiva há 6 anos, para lavar em casa.</p><p>Ao lado ou abaixo, um trecho de 10 a 15 segundos do vídeo e o botão <span class="cta">Quero por R$ 47</span></p></div></div>
+      <div class="sec"><span class="n">3</span><div><h3>O problema</h3><p>Foto do carro com riscos no sol e os 4 erros em quatro blocos curtos. O cliente se reconhece.</p></div></div>
+      <div class="sec"><span class="n">4</span><div><h3>O que você recebe</h3><p>Três cartões: <b>e-book</b> de 27 páginas, <b>vídeo completo</b> da lavagem e <b>lista de compras</b> por orçamento. Abaixo, o valor R$ 47 e o botão.</p></div></div>
+      <div class="sec"><span class="n">5</span><div><h3>Dentro do e-book</h3><p>O sumário em lista e três páginas de exemplo em miniatura, pra mostrar que é um material cuidadoso.</p></div></div>
+      <div class="sec"><span class="n">6</span><div><h3>Quem é o Matheus</h3><p>Sua foto trabalhando, 6 anos de estética automotiva, o Tidioli Studio e uma ou duas fotos de antes e depois reais.</p></div></div>
+      <div class="sec"><span class="n">7</span><div><h3>Garantia</h3><p>7 dias para pedir o dinheiro de volta. A lei já garante o direito de arrependimento em compra online, então a promessa é segura.</p></div></div>
+      <div class="sec"><span class="n">8</span><div><h3>Perguntas frequentes</h3><ul><li>Preciso de muitos produtos?</li><li>Serve para qualquer carro?</li><li>Como recebo o e-book e o vídeo?</li><li>Funciona em carro com película ou fosco?</li></ul></div></div>
+      <div class="sec"><span class="n">9</span><div><h3>Chamada final</h3><p>Resumo em uma frase, o preço e o botão pela última vez.</p></div></div>
+      <div class="sec"><span class="n">10</span><div><h3>Rodapé</h3><p>Logo, "Tidioli Studio · Estética Automotiva", Instagram, e-mail de contato e links de termos e privacidade.</p></div></div>
+    </div>
+    <aside class="wf" aria-label="Esboço da página">
+      <div class="k">Logo · botão</div>
+      <div>Título + vídeo</div>
+      <div class="c">Botão R$ 47</div>
+      <div>Problema</div>
+      <div>3 itens que recebe</div>
+      <div class="c">Botão</div>
+      <div>Dentro do e-book</div>
+      <div>Quem é o Matheus</div>
+      <div>Garantia</div>
+      <div>Perguntas</div>
+      <div class="c">Botão final</div>
+      <div class="k">Rodapé</div>
+    </aside>
+  </div>
+
+  <h3 style="margin-top:22px">Checkout e depois da compra</h3>
+  <div class="flow">
+    <div class="step"><b>Checkout</b><span>E-book R$ 47 com a caixa do order bump</span></div>
+    <div class="step"><b>Order bump</b><span>Lista profissional de produtos, R$ 14</span></div>
+    <div class="step"><b>Obrigado</b><span>Botão para baixar o PDF e assistir ao vídeo</span></div>
+    <div class="step"><b>E-mail</b><span>Os mesmos links e o contato do estúdio</span></div>
+  </div>
+
+  <div class="alert"><b>O que preciso de você pra montar o site:</b> as fotos da lista na aba Estrutura do e-book, o trecho do vídeo, seu Instagram e WhatsApp e o nome da plataforma de pagamento que vai usar. Posso entregar o texto de cada seção e o HTML da página.</div>
+</section>
+
+<!-- CONTEÚDO -->
+<section class="tab" id="conteudo">
+  <h2>Conteúdo do e-book</h2>
+  <p>Rascunho de cada capítulo. Reescreva no seu jeito de falar.</p>
+
+  <article class="chap"><div class="meta"><span class="tag">Capítulo 1</span><span>2 páginas</span></div>
+    <h3>Por que seu carro fica riscado depois de lavar</h3>
+    <p>A maior parte dos riscos circulares que você vê no sol vem da lavagem, não do tempo. Sujeira dura fica presa na esponja ou na toalha e é arrastada pela pintura, que é uma camada fina de verniz.</p>
+    <ul><li>Esponja de cozinha ou de banho, que prende sujeira na superfície.</li><li>Toalha comum ou flanela para secar.</li><li>Lavar com o carro quente, no sol: o shampoo seca e marca.</li><li>Um balde só: você devolve a sujeira para a pintura a cada passada.</li></ul>
+  </article>
+
+  <article class="chap"><div class="meta"><span class="tag">Capítulo 2</span><span>3 páginas</span></div>
+    <h3>O kit certo, por orçamento</h3>
+    <div class="scroll"><table>
+      <tr><th>Nível</th><th>Itens</th></tr>
+      <tr><td><b>Básico</b></td><td>Shampoo automotivo de pH neutro, dois baldes, luva de microfibra, toalha grande de microfibra para secagem.</td></tr>
+      <tr><td><b>Intermediário</b></td><td>Básico + separador de sujeira no fundo do balde, pincel macio para rodas, limpador de rodas, spray selante rápido.</td></tr>
+      <tr><td><b>Avançado</b></td><td>Intermediário + lavadora de pressão, canhão de espuma, soprador para secar, luvas e toalhas separadas para cada área.</td></tr>
+    </table></div>
+    <div class="tip"><b>Regra de ouro:</b> a luva e a toalha de microfibra valem mais do que qualquer produto caro.</div>
+    <div class="alert"><b>Nunca use</b> detergente de cozinha. Ele tira a proteção da pintura e resseca plásticos e borrachas.</div>
+  </article>
+
+  <article class="chap"><div class="meta"><span class="tag">Capítulo 3</span><span>2 páginas</span></div>
+    <h3>Antes de molhar o carro</h3>
+    <ul><li>Lave na sombra e com a lataria fria ao toque. Se estiver quente, espere.</li><li>Separe tudo antes de começar: baldes, luvas, toalhas, produtos.</li><li>Um balde com shampoo diluído conforme o rótulo e outro só com água limpa.</li><li>Panos e luvas diferentes para rodas e para pintura. Nunca misture.</li></ul>
+  </article>
+
+  <article class="chap"><div class="meta"><span class="tag">Capítulo 4</span><span>6 páginas</span></div>
+    <h3>O passo a passo da lavagem</h3>
+    <p><b>1. Rodas e pneus primeiro.</b> É a parte mais suja. Aplique o limpador, passe o pincel, enxágue.</p>
+    <p><b>2. Enxágue geral, de cima para baixo.</b> Tire o excesso de terra com bastante água antes de encostar a luva.</p>
+    <p><b>3. Espuma (opcional).</b> Cubra o carro de espuma, deixe agir uns minutos sem secar e enxágue.</p>
+    <p><b>4. Método dos dois baldes.</b> Mergulhe a luva no shampoo, lave uma parte pequena, lave a luva no balde de água limpa antes de voltar ao shampoo.</p>
+    <p><b>5. Ordem da lavagem.</b> Teto, vidros, capô e porta-malas, laterais, para-choques. Em linha reta, sem círculos.</p>
+    <p><b>6. Secagem.</b> Estenda a toalha e arraste de leve, sem esfregar, na sombra.</p>
+  </article>
+
+  <article class="chap"><div class="meta"><span class="tag">Capítulo 5</span><span>2 páginas</span></div>
+    <h3>Proteção rápida em 10 minutos</h3>
+    <p>Com o carro seco, aplique selante ou cera líquida em uma parte por vez, espalhe com microfibra limpa e retire o excesso com outra. A pintura fica mais lisa, suja menos e a próxima lavagem é mais fácil.</p>
+    <ul><li>Pouco produto: excesso dá mais trabalho para tirar.</li><li>Pneus: produto próprio, sem escorrer na banda de rodagem.</li><li>Vidros: limpador específico e pano separado.</li></ul>
+  </article>
+
+  <article class="chap"><div class="meta"><span class="tag">Capítulo 6</span><span>2 páginas</span></div>
+    <h3>Erros e mitos</h3>
+    <ul><li>"Mais espuma limpa mais." Espuma não limpa mais; o que protege é o método.</li><li>"Toalha que caiu no chão ainda serve." Não serve. Separe e lave antes de reutilizar.</li><li>"Posto de lavagem é igual a lavar em casa." Escovas e panos coletivos acumulam sujeira de vários carros.</li><li>"Lavar toda semana estraga a pintura." O que estraga é o método.</li></ul>
+  </article>
+
+  <article class="chap"><div class="meta"><span class="tag">Capítulo 7</span><span>2 páginas</span></div>
+    <h3>Rotina de manutenção</h3>
+    <div class="grid">
+      <div class="card"><b>A cada 15 dias</b><p>Lavagem completa com dois baldes.</p></div>
+      <div class="card"><b>Todo mês</b><p>Spray selante rápido depois da lavagem.</p></div>
+      <div class="card"><b>A cada 3 meses</b><p>Cera ou selante mais duradouro e revisão do kit.</p></div>
+    </div>
+  </article>
+
+  <article class="chap"><div class="meta"><span class="tag">Checklist</span><span>1 página</span></div>
+    <h3>Marque na tela</h3>
+    <ul class="check">
+      <li><label><input type="checkbox">Carro na sombra, lataria fria</label></li>
+      <li><label><input type="checkbox">Dois baldes montados</label></li>
+      <li><label><input type="checkbox">Rodas e pneus lavados primeiro</label></li>
+      <li><label><input type="checkbox">Enxágue de cima para baixo</label></li>
+      <li><label><input type="checkbox">Lavagem em linhas retas, parte mais suja por último</label></li>
+      <li><label><input type="checkbox">Enxágue final em lâmina de água</label></li>
+      <li><label><input type="checkbox">Secagem com microfibra, sem esfregar</label></li>
+      <li><label><input type="checkbox">Selante aplicado e removido</label></li>
+    </ul>
+  </article>
+
+  <article class="chap"><div class="meta"><span class="tag warn">Order bump</span><span>fora do e-book</span></div>
+    <h3>Lista profissional de produtos</h3>
+    <p>Modelo de cada linha. Preencha com os produtos que você realmente usa.</p>
+    <div class="scroll"><table>
+      <tr><th>Categoria</th><th>Produto</th><th>Pra que serve</th><th>Preço</th><th>Opção barata</th></tr>
+      <tr><td>Shampoo</td><td>[marca e modelo]</td><td>[diluição]</td><td>[R$]</td><td>[alternativa]</td></tr>
+      <tr><td>Luva de microfibra</td><td>[marca e modelo]</td><td>[por que é melhor]</td><td>[R$]</td><td>[alternativa]</td></tr>
+      <tr><td>Toalha de secagem</td><td>[marca e modelo]</td><td>[gramatura, tamanho]</td><td>[R$]</td><td>[alternativa]</td></tr>
+      <tr><td>Limpador de rodas</td><td>[marca e modelo]</td><td>[rodas e pneus]</td><td>[R$]</td><td>[alternativa]</td></tr>
+      <tr><td>Selante ou cera</td><td>[marca e modelo]</td><td>[duração]</td><td>[R$]</td><td>[alternativa]</td></tr>
+    </table></div>
+  </article>
+</section>
+
+<!-- OFERTA -->
+<section class="tab" id="oferta">
+  <h2>Oferta</h2>
+  <div class="grid">
+    <div class="card"><span class="tag">Produto</span><h3>E-book Lavagem Sem Risco</h3><p>PDF de 27 páginas, <b>vídeo completo da lavagem</b> e <b>lista de compras básica</b> por orçamento. O cliente não precisa comprar mais nada pra lavar bem o carro.</p><p><b>R$ 47</b> <span class="note">(testar entre R$ 37 e R$ 57)</span></p></div>
+    <div class="card"><span class="tag">Order bump</span><h3>Lista profissional de produtos</h3><p>Extra marcado no checkout: os produtos específicos que você usa, com marca, modelo, preço e uma opção mais barata.</p><p><b>R$ 14</b> <span class="note">(testar entre R$ 9 e R$ 19)</span></p></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Quem compra</h3>
+    <p>Dono de carro que lava em casa ou no posto, já se incomodou com riscos circulares no sol e tem medo de piorar. Não quer virar detalhista; quer parar de estragar o carro e gastar pouco.</p>
+    <h3>Promessa</h3>
+    <p>Lave seu carro em casa com método de profissional e reduza o risco de marcas de lavagem, gastando só com o que importa.</p>
+    <div class="alert"><b>Cuidado com a promessa.</b> Não prometa "zero risco" nem "pintura nova". Fale em reduzir o risco de micro-riscos. Isso evita reclamação e reprovação de anúncio.</div>
+  </div>
+</section>
+
+<!-- ANÚNCIOS -->
+<section class="tab" id="anuncios">
+  <h2>Anúncios no Meta</h2>
+  <p>Três vídeos curtos, na vertical (9:16), com legenda na tela e em carro de verdade. Termine com a logo do Tidioli Studio por 1 segundo.</p>
+
+  <div class="card" style="margin-bottom:14px"><span class="tag">Vídeo 1 · 20 s</span><h3>"Você lava errado"</h3>
+<div class="script" id="s1">GANCHO (0–3 s): "Se você lava o carro assim, está riscando a pintura."
+CENA: você passando esponja em círculos no sol.
+DESENVOLVIMENTO (3–15 s): "Esponja prende sujeira, círculo deixa marca e sol seca o shampoo. Trabalho com estética automotiva há 6 anos e vejo isso toda semana."
+CTA (15–20 s): "No e-book Lavagem Sem Risco tem o passo a passo e o vídeo da lavagem completa. Clica no botão abaixo."</div>
+    <button data-copy="s1">Copiar roteiro</button></div>
+
+  <div class="card" style="margin-bottom:14px"><span class="tag">Vídeo 2 · 25 s</span><h3>Dois baldes</h3>
+<div class="script" id="s2">GANCHO (0–3 s): "Por que todo detalhista usa dois baldes?"
+CENA: balde de enxágue com água suja ao lado do balde de shampoo.
+DESENVOLVIMENTO (3–20 s): "Cada vez que você mergulha a luva suja no shampoo, devolve sujeira para o carro. Com dois baldes, a sujeira fica no de enxágue."
+CTA (20–25 s): "O método completo, com vídeo, está no e-book. Link abaixo."</div>
+    <button data-copy="s2">Copiar roteiro</button></div>
+
+  <div class="card" style="margin-bottom:14px"><span class="tag">Vídeo 3 · 20 s</span><h3>Kit barato</h3>
+<div class="script" id="s3">GANCHO (0–3 s): "Esse é o kit mínimo para lavar bem seu carro em casa."
+CENA: seu kit básico sobre uma mesa, item por item.
+DESENVOLVIMENTO (3–16 s): "Shampoo de pH neutro, dois baldes, luva e toalha de microfibra. Não precisa de mais para começar."
+CTA (16–20 s): "A lista completa por orçamento e o vídeo da lavagem estão no e-book. Clica no link."</div>
+    <button data-copy="s3">Copiar roteiro</button></div>
+
+  <h3 style="margin-top:20px">Textos do anúncio</h3>
+  <div class="grid">
+    <div class="card"><b>Texto A</b><div class="script" id="t1" style="margin-top:8px">Seu carro fica limpo e, no sol, cheio de riscos circulares? O problema quase sempre é o jeito de lavar. Sou detalhista há 6 anos e montei um passo a passo com vídeo para lavar em casa sem estragar a pintura.</div><button data-copy="t1">Copiar</button></div>
+    <div class="card"><b>Texto B</b><div class="script" id="t2" style="margin-top:8px">Esponja, toalha comum e lavar no sol: três hábitos que riscam o carro. Veja o método que profissionais usam, adaptado para quem lava em casa.</div><button data-copy="t2">Copiar</button></div>
+    <div class="card"><b>Texto C</b><div class="script" id="t3" style="margin-top:8px">Gastar pouco e lavar melhor é possível. E-book com passo a passo em fotos, vídeo completo da lavagem e lista de compras por orçamento.</div><button data-copy="t3">Copiar</button></div>
+  </div>
+
+  <h3 style="margin-top:20px">Plano de teste</h3>
+  <div class="scroll"><table>
+    <tr><th>Item</th><th>Como fazer</th></tr>
+    <tr><td><b>Orçamento</b></td><td>R$ 25 a R$ 30 por dia, por 5 a 7 dias.</td></tr>
+    <tr><td><b>Estrutura</b></td><td>Uma campanha de vendas, um conjunto com público aberto (25 a 55 anos, Brasil) e os 3 vídeos como anúncios separados.</td></tr>
+    <tr><td><b>Pixel e evento</b></td><td>Pixel na página. Antes das primeiras vendas, otimize para iniciar finalização de compra.</td></tr>
+    <tr><td><b>Decisão</b></td><td>Desligue o criativo que gastar 2 a 3 vezes o ticket sem nenhuma venda. Duplique o que vender e teste um gancho novo em cima dele.</td></tr>
+    <tr><td><b>Orçamento</b></td><td>Não mexa mais de 20% por dia, para não zerar o aprendizado.</td></tr>
+  </table></div>
+  <div class="alert"><b>Política do Meta:</b> evite "antes e depois" exagerado e promessas absolutas. Use fotos reais do seu trabalho.</div>
+</section>
+
+<!-- NÚMEROS -->
+<section class="tab" id="numeros">
+  <h2>Quanto posso gastar por venda</h2>
+  <p>Mexa nos números pra ver o custo máximo por venda e por clique antes de dar prejuízo. Os valores são exemplos.</p>
+  <div class="card">
+    <div class="calc">
+      <label>Preço do e-book (R$)<input type="number" id="p" value="47" min="0" step="1"></label>
+      <label>Preço do bump (R$)<input type="number" id="b" value="14" min="0" step="1"></label>
+      <label>Quem compra o bump (%)<input type="number" id="br" value="25" min="0" max="100"></label>
+      <label>Taxa da plataforma (%)<input type="number" id="f" value="10" min="0" max="100"></label>
+      <label>Visitantes que compram (%)<input type="number" id="cv" value="2" min="0.1" step="0.1"></label>
+    </div>
+    <div class="out">
+      <div><strong id="o1">–</strong><span>Receita média por venda</span></div>
+      <div><strong id="o2">–</strong><span>Custo máximo por venda para empatar</span></div>
+      <div><strong id="o3">–</strong><span>Clique máximo para empatar</span></div>
+      <div><strong id="o4">–</strong><span>Vendas para faturar R$ 1.000</span></div>
+    </div>
+    <p class="note" style="margin-top:12px">Receita média = e-book + bump ponderado pela taxa de compra, menos a taxa da plataforma. "Empatar" não conta o seu tempo.</p>
+  </div>
+</section>
+</div>
+
+<script>
+(function(){
+  var ids=["ebook","site","conteudo","oferta","anuncios","numeros"];
+  function show(){
+    var h=(location.hash||"").slice(1);
+    if(ids.indexOf(h)<0)h=ids[0];
+    ids.forEach(function(i){document.getElementById(i).classList.toggle("on",i===h)});
+    document.querySelectorAll("nav a").forEach(function(a){a.setAttribute("aria-current",a.getAttribute("href")==="#"+h?"true":"false")});
+    window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange",show);show();
+  document.addEventListener("click",function(e){
+    var b=e.target.closest("[data-copy]");if(!b)return;
+    var el=document.getElementById(b.getAttribute("data-copy"));
+    var done=function(){var t=b.textContent;b.textContent="Copiado";setTimeout(function(){b.textContent=t},1500)};
+    var fb=function(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selecionado, use copiar"};
+    try{navigator.clipboard.writeText(el.innerText).then(done,fb)}catch(x){fb()}
+  });
+  function v(id){return parseFloat(document.getElementById(id).value)||0}
+  var brl=new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
+  function calc(){
+    var net=(v("p")+v("b")*v("br")/100)*(1-v("f")/100),cv=v("cv")/100;
+    document.getElementById("o1").textContent=brl.format(net);
+    document.getElementById("o2").textContent=brl.format(net);
+    document.getElementById("o3").textContent=brl.format(net*cv);
+    document.getElementById("o4").textContent=net>0?(1000/net).toFixed(1).replace(".",","):"–";
+  }
+  document.querySelectorAll("#numeros input").forEach(function(i){i.addEventListener("input",calc)});calc();
+})();
+</script>
