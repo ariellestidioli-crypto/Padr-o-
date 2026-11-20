@@ -202,8 +202,7 @@ page(head('Capítulo 2', 'Os kits e os produtos', 'Escolha pelo quanto você que
 </ul>
 <h3>A regra da microfibra</h3>
 <p>Luva e toalha de microfibra valem mais do que qualquer produto caro. Tenha sempre uma luva para a pintura e outra, separada, para rodas e caixas de roda. Se uma luva ou toalha cair no chão, ela não volta para o carro até ser lavada.</p>
-<div class="foto wide"><img src="%s"><span>Kit montado, com a luva, o balde com separador e o pulverizador.</span></div>
-''' % prep('assets/fotos/f13-kit-baldes-editada.jpg', 'f13', 1100), '', True)
+''', '', True)
 
 # 8-10 tabelas dos kits
 descr = {
@@ -226,6 +225,8 @@ cards = ''.join(
     '<div class="pc"><div class="im"><img src="%s"></div><div class="tx"><span class="cat">%s</span><b>%s</b><i>%s</i><p>%s</p></div></div>'
     % (product_img(f), c, n, m_, t) for f, n, m_, c, t in P)
 chunks = re.findall(r'<div class="pc">.*?</div></div>', cards, re.S)
+nota = '<div class="pc nt"><div class="tx"><span class="cat">Sobre a lavadora de pressão</span><b>É uma opção de cada um</b><p>Você não precisa de lavadora para lavar bem o carro. Se for usar, lembre de trocar a ponta da mangueira por um <b>engate rápido</b> ou de comprar uma <b>mangueira separada</b>. A que vem com a lavadora costuma ser curta (a da Wap Combate Turbo tem 5 m). Para dar a volta no carro sem esticar, o ideal é uma mangueira de <b>10 metros</b>.</p></div></div>'
+chunks.append(nota)
 for i in range(0, len(chunks), 6):
     page(head('Capítulo 2', 'Fichas dos produtos', 'Reconheça cada item na loja. Os preços ficam de fora porque mudam toda hora.') + '<div class="pgrid">' + ''.join(chunks[i:i + 6]) + '</div>', '', True)
 
@@ -239,8 +240,7 @@ page(head('Capítulo 3', 'Antes de molhar o carro', 'A lavagem começa na prepar
 <li><b>Roda fria.</b> Não aplique produto de limpeza em roda quente. Espere esfriar.</li>
 </ul>
 <div class="tip"><b>Tire os anéis e relógios.</b> Eles podem riscar a pintura sem você perceber durante a lavagem.</div>
-<div class="foto wide"><img src="%s"><span>Os dois baldes com separador, a luva e o pulverizador, prontos pra começar.</span></div>
-''' % prep('assets/fotos/f13-kit-baldes-editada.jpg', 'f13b', 1100), '', True)
+''', '', True)
 
 # cap 4
 steps1 = [
@@ -252,8 +252,8 @@ steps1 = [
 steps2 = [
  ('Ordem da lavagem', 'Comece pelas partes mais altas e limpas e termine nas mais sujas: teto, vidros, capô, porta-malas, laterais de cima, laterais de baixo e para-choques. Passe a luva em linhas retas, sem fazer força.'),
  ('Enxágue final', 'De cima para baixo. Se quiser, tire o bico da mangueira e deixe a água correr sobre a pintura: ela escorre e sobra menos gota para secar.'),
- ('Secagem', 'Estenda a toalha de secagem sobre a pintura e arraste de leve, sem pressionar. Troque de toalha ou de lado quando ela ficar encharcada. Use o ar para tirar a água de frestas, retrovisores e emblemas.'),
- ('Pneus e acabamento', 'Com o pneu seco e limpo, aplique o condicionador com o aplicador e retire o excesso, pra não escorrer nem respingar na pintura. Plásticos externos podem receber o condicionador próprio, diluído como diz o rótulo.'),
+ ('Secagem', 'Estenda a toalha de secagem sobre a pintura e arraste de leve, sem pressionar. Troque de toalha ou de lado quando ela ficar encharcada. Use o ar para tirar a água de frestas, retrovisores e emblemas. Seque também os pneus: o condicionador só deve ser aplicado com o pneu seco.'),
+ ('Pneus e acabamento', 'Com o pneu seco (secado na etapa anterior) e limpo, aplique o condicionador com o aplicador e retire o excesso, pra não escorrer nem respingar na pintura. Plásticos externos podem receber o condicionador próprio, diluído como diz o rótulo.'),
 ]
 
 
